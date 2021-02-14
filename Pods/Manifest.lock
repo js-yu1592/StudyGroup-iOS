@@ -1,0 +1,24 @@
+PODS:
+  - FSCalendar (2.8.2)
+  - JJFloatingActionButton (2.5.0)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - FSCalendar
+  - JJFloatingActionButton
+  - SnapKit (~> 5.0.0)
+
+SPEC REPOS:
+  trunk:
+    - FSCalendar
+    - JJFloatingActionButton
+    - SnapKit
+
+SPEC CHECKSUMS:
+  FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 76d41854969eeb14c4d3535e87038fa51458b93c
+
+COCOAPODS: 1.10.1

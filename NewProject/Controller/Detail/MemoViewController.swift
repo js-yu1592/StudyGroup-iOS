@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class MemoViewController: UIViewController, UITextViewDelegate {
     
+    var completionBlock: (()->Void)?
     
     @IBOutlet weak var titleLabel: UINavigationItem!
     @IBOutlet weak var textView: UITextView!
@@ -17,11 +19,11 @@ class MemoViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        IQKeyboardManager.shared.enable = false
+        textView.becomeFirstResponder()
         placeholderSetting()
         titleLabel.title = DataManager.shared.formatter.string(from: Date())
        
-        
-        
     }
     
     
@@ -64,9 +66,9 @@ class MemoViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func completionButton(_ sender: Any) {
    
-        
-        var newText = ""
-        newText = self.textView.text ?? ""
+        if let completionBlock = completionBlock {
+            completionBlock()
+        }
         
         self.dismiss(animated: true, completion: nil)
     }

@@ -96,6 +96,23 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         actionButton.addItem(title: "메모 작성", image: UIImage(systemName: "note.text.badge.plus")?.withRenderingMode(.alwaysTemplate)) { item in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "memoVC") as? MemoViewController else { return }
+            vc.completionBlock = {
+                let dateString = self.dataManager.formatter.string(from: self.calendar.selectedDate!)
+                let text = vc.textView.text
+                if self.dataManager.eventsDic[dateString] != nil {
+                    self.dataManager.eventsDic[dateString]?.append(text!)
+                } else {
+                    self.dataManager.eventsDic.updateValue([], forKey: dateString)
+                    self.dataManager.eventsDic[dateString]?.append(text!)
+                }
+                
+                self.models = self.dataManager.eventsDic[dateString] ?? []
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.calendar.reloadData()
+                }
+            }
             self.present(vc, animated: true, completion: nil)
         }
         
@@ -118,6 +135,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.calendar.reloadData()
                 }
             }
             self.present(vc, animated: true, completion: nil)
@@ -140,7 +158,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = models[indexPath.row]
-        cell.detailTextLabel?.text = dataManager.formatter.string(from: Date())
+        cell.detailTextLabel?.text = "생성일 : \(dataManager.formatter.string(from: Date()))"
         
         return cell
     }
@@ -158,6 +176,20 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         models = dataManager.eventsDic[dateString] ?? []
         self.tableView.reloadData()
         
+    }
+    
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        
+        let dateString = dataManager.formatter.string(from: date)
+        
+        for dic in dataManager.eventsDic {
+            let eventdate = dic.key
+            let newDate = eventdate
+            if newDate.contains(dateString) {
+                return dataManager.eventsDic[eventdate]!.count
+            }
+        }
+        return 0
     }
     
     

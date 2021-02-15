@@ -29,7 +29,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
     }()
     
-
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,26 +93,41 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         let actionButton = JJFloatingActionButton()
         
         actionButton.buttonColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-
+        
         actionButton.addItem(title: "메모 작성", image: UIImage(systemName: "note.text.badge.plus")?.withRenderingMode(.alwaysTemplate)) { item in
-          let vc = MemoViewController()
-            vc.view.backgroundColor = .systemIndigo
-            vc.modalPresentationStyle = .automatic
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "memoVC") as? MemoViewController else { return }
             self.present(vc, animated: true, completion: nil)
         }
-
+        
         actionButton.addItem(title: "할 일 작성", image: UIImage(systemName: "square.and.pencil")?.withRenderingMode(.alwaysTemplate)) { item in
-          let vc = ToDoViewController()
-            vc.view.backgroundColor = .red
-            vc.modalPresentationStyle = .fullScreen
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "ToDoVC") as? ToDoViewController else { return }
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .overFullScreen
+            vc.completionBlock = {
+                let dateString = self.dataManager.formatter.string(from: self.calendar.selectedDate!)
+                let text = vc.todoTextField.text
+                
+                if self.dataManager.eventsDic[dateString] != nil {
+                    self.dataManager.eventsDic[dateString]?.append(text!)
+                } else {
+                    self.dataManager.eventsDic.updateValue([], forKey: dateString)
+                    self.dataManager.eventsDic[dateString]?.append(text!)
+                }
+                
+                self.models = self.dataManager.eventsDic[dateString] ?? []
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
             self.present(vc, animated: true, completion: nil)
         }
-
+        
         view.addSubview(actionButton)
         actionButton.display(inViewController: self)
         
     }
-   
+    
     
     
     // MARK: - TableView DataSourse & Delegate
@@ -122,7 +137,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.text = models[indexPath.row]
         cell.detailTextLabel?.text = dataManager.formatter.string(from: Date())
@@ -146,7 +161,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-
+    
     
 }
 

@@ -9,4 +9,5 @@ target 'NewProject' do
 pod 'FSCalendar'
 pod 'SnapKit', '~> 5.0.0'
 pod 'JJFloatingActionButton'
+pod 'IQKeyboardManagerSwift'
 end

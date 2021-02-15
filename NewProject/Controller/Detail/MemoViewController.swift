@@ -19,7 +19,6 @@ class MemoViewController: UIViewController, UITextViewDelegate {
         
         placeholderSetting()
         titleLabel.title = DataManager.shared.formatter.string(from: Date())
-        
        
         
         

@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
-class ToDoViewController: UIViewController, UITextFieldDelegate {
+class ToDoViewController: UIViewController {
     
     var completionBlock : (()->Void)?
     
@@ -23,39 +24,14 @@ class ToDoViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+    
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
         rightButton()
-        todoTextField.delegate = self
-        
-        
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         todoTextField.becomeFirstResponder()
-    }
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRect = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRect.height
-            
-            self.todoTextField.frame.origin.y =
-            self.view.frame.height - self.todoTextField.frame.height - keyboardHeight
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        self.todoTextField.frame.origin.y = self.view.frame.height - self.todoTextField.frame.height
     }
   
     
@@ -64,7 +40,7 @@ class ToDoViewController: UIViewController, UITextFieldDelegate {
         addbutton.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
         rightView.addSubview(addbutton)
         todoTextField.layer.masksToBounds = true
-        todoTextField.roundCorners([.topLeft, .topRight], radius: 25)
+        todoTextField.roundCorners([.topLeft, .topRight], radius: 20)
         todoTextField.rightView = rightView
         todoTextField.rightViewMode = .always
         addbutton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
@@ -72,14 +48,12 @@ class ToDoViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func didTapAddButton(){
-        // 테이블뷰 리로드 컴플리션 블럭
+        // 데이터 처리 및 테이블뷰 리로드
         if let completionBlock = completionBlock {
             completionBlock()
         }
-        
         // nil로 초기화
         todoTextField.text = nil
-      
     }
     
     @IBAction func dimmingButton(_ sender: UIButton) {

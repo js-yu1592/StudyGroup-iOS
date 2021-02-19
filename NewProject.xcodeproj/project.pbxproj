@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,12 +12,16 @@
 		030D1CC125D95686003ED740 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030D1CBF25D95686003ED740 /* Main.storyboard */; };
 		030D1CC325D95686003ED740 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030D1CC225D95686003ED740 /* Assets.xcassets */; };
 		030D1CC625D95686003ED740 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 030D1CC425D95686003ED740 /* LaunchScreen.storyboard */; };
-		030D1CD425D95723003ED740 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D1CD325D95723003ED740 /* DataManager.swift */; };
 		030D1CD825D95768003ED740 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D1CD725D95768003ED740 /* CalendarViewController.swift */; };
 		030D1CDB25D9576E003ED740 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D1CDA25D9576E003ED740 /* TimerViewController.swift */; };
 		030D1CDE25D9577C003ED740 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D1CDD25D9577C003ED740 /* SettingsViewController.swift */; };
 		030D1CE325D957C3003ED740 /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D1CE225D957C3003ED740 /* MemoViewController.swift */; };
 		030D1CE625D957DA003ED740 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030D1CE525D957DA003ED740 /* ToDoViewController.swift */; };
+		03667FA425DEA30D001A7038 /* NewProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03667FA225DEA30D001A7038 /* NewProject.xcdatamodeld */; };
+		03667FAC25DEA459001A7038 /* CalendarViewController+Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03667FAB25DEA459001A7038 /* CalendarViewController+Function.swift */; };
+		03667FC425DEABD1001A7038 /* Memo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03667FC225DEABD1001A7038 /* Memo+CoreDataClass.swift */; };
+		03667FC525DEABD1001A7038 /* Memo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03667FC325DEABD1001A7038 /* Memo+CoreDataProperties.swift */; };
+		03667FD325DEAC99001A7038 /* CalendarViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03667FD225DEAC99001A7038 /* CalendarViewController+TableView.swift */; };
 		3AE343239912E7694934118C /* Pods_NewProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C789D5EB585302CABDFFDDD /* Pods_NewProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,12 +33,16 @@
 		030D1CC225D95686003ED740 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		030D1CC525D95686003ED740 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		030D1CC725D95686003ED740 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		030D1CD325D95723003ED740 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		030D1CD725D95768003ED740 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		030D1CDA25D9576E003ED740 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		030D1CDD25D9577C003ED740 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		030D1CE225D957C3003ED740 /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		030D1CE525D957DA003ED740 /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
+		03667FA325DEA30D001A7038 /* NewProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewProject.xcdatamodel; sourceTree = "<group>"; };
+		03667FAB25DEA459001A7038 /* CalendarViewController+Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarViewController+Function.swift"; sourceTree = "<group>"; };
+		03667FC225DEABD1001A7038 /* Memo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Memo+CoreDataClass.swift"; path = "/Users/developer.paul/Desktop/NewProject/NewProject/Model/Memo+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		03667FC325DEABD1001A7038 /* Memo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Memo+CoreDataProperties.swift"; path = "/Users/developer.paul/Desktop/NewProject/NewProject/Model/Memo+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		03667FD225DEAC99001A7038 /* CalendarViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarViewController+TableView.swift"; sourceTree = "<group>"; };
 		2C20A1E8F6D2FE00419B0B8F /* Pods-NewProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewProject.debug.xcconfig"; path = "Target Support Files/Pods-NewProject/Pods-NewProject.debug.xcconfig"; sourceTree = "<group>"; };
 		3C789D5EB585302CABDFFDDD /* Pods_NewProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NewProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98314284389753BD3F70628B /* Pods-NewProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewProject.release.xcconfig"; path = "Target Support Files/Pods-NewProject/Pods-NewProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -85,7 +93,9 @@
 		030D1CCE25D9569D003ED740 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				030D1CD325D95723003ED740 /* DataManager.swift */,
+				03667FC225DEABD1001A7038 /* Memo+CoreDataClass.swift */,
+				03667FC325DEABD1001A7038 /* Memo+CoreDataProperties.swift */,
+				03667FA225DEA30D001A7038 /* NewProject.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -130,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				030D1CD725D95768003ED740 /* CalendarViewController.swift */,
+				03667FAB25DEA459001A7038 /* CalendarViewController+Function.swift */,
+				03667FD225DEAC99001A7038 /* CalendarViewController+TableView.swift */,
 				030D1CDA25D9576E003ED740 /* TimerViewController.swift */,
 				030D1CDD25D9577C003ED740 /* SettingsViewController.swift */,
 			);
@@ -151,7 +163,6 @@
 				2C20A1E8F6D2FE00419B0B8F /* Pods-NewProject.debug.xcconfig */,
 				98314284389753BD3F70628B /* Pods-NewProject.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -279,11 +290,15 @@
 			files = (
 				030D1CE625D957DA003ED740 /* ToDoViewController.swift in Sources */,
 				030D1CDB25D9576E003ED740 /* TimerViewController.swift in Sources */,
+				03667FA425DEA30D001A7038 /* NewProject.xcdatamodeld in Sources */,
 				030D1CD825D95768003ED740 /* CalendarViewController.swift in Sources */,
-				030D1CD425D95723003ED740 /* DataManager.swift in Sources */,
+				03667FC425DEABD1001A7038 /* Memo+CoreDataClass.swift in Sources */,
 				030D1CBA25D95686003ED740 /* AppDelegate.swift in Sources */,
 				030D1CE325D957C3003ED740 /* MemoViewController.swift in Sources */,
+				03667FD325DEAC99001A7038 /* CalendarViewController+TableView.swift in Sources */,
 				030D1CBC25D95686003ED740 /* SceneDelegate.swift in Sources */,
+				03667FC525DEABD1001A7038 /* Memo+CoreDataProperties.swift in Sources */,
+				03667FAC25DEA459001A7038 /* CalendarViewController+Function.swift in Sources */,
 				030D1CDE25D9577C003ED740 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,6 +503,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		03667FA225DEA30D001A7038 /* NewProject.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				03667FA325DEA30D001A7038 /* NewProject.xcdatamodel */,
+			);
+			currentVersion = 03667FA325DEA30D001A7038 /* NewProject.xcdatamodel */;
+			path = NewProject.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 030D1CAE25D95686003ED740 /* Project object */;
 }

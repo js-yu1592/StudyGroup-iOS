@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/developer.paul/Desktop/NewProject/NewProject/Model/Memo+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/developer.paul/Desktop/NewProject/NewProject/Model/Memo+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:NewProject.xcodeproj">
    </FileRef>
    <FileRef

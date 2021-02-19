@@ -9,12 +9,18 @@ import UIKit
 import FSCalendar
 import SnapKit
 import JJFloatingActionButton
+import CoreData
 
-class CalendarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate {
+class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - Property
-    let dataManager = DataManager.shared
-    var models : [String] = []
+    var memos = [Memo]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        return formatter
+    }()
     
     @IBOutlet var calendar: FSCalendar!
     @IBOutlet var tableView: UITableView!
@@ -39,6 +45,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         
         floatingActionButton()
         initializeForCalendar()
+        fetchDateMemos(date: Date())
         
     }
     
@@ -93,25 +100,20 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         let actionButton = JJFloatingActionButton()
         
         actionButton.buttonColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-        
         actionButton.addItem(title: "메모 작성", image: UIImage(systemName: "note.text.badge.plus")?.withRenderingMode(.alwaysTemplate)) { item in
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "memoVC") as? MemoViewController else { return }
             vc.completionBlock = {
-                let dateString = self.dataManager.formatter.string(from: self.calendar.selectedDate!)
+                let date = self.calendar.selectedDate!
+                let dateString = self.formatter.string(from: date)
                 let text = vc.textView.text
-                if self.dataManager.eventsDic[dateString] != nil {
-                    self.dataManager.eventsDic[dateString]?.append(text!)
-                } else {
-                    self.dataManager.eventsDic.updateValue([], forKey: dateString)
-                    self.dataManager.eventsDic[dateString]?.append(text!)
-                }
                 
-                self.models = self.dataManager.eventsDic[dateString] ?? []
+                // create Memo
+                let memo = Memo(context: self.context)
+                memo.content = text
+                memo.date = dateString
                 
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
-                }
+                self.saveMemo()
+                self.fetchDateMemos(date: date)
             }
             self.present(vc, animated: true, completion: nil)
         }
@@ -121,46 +123,22 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overFullScreen
             vc.completionBlock = {
-                let dateString = self.dataManager.formatter.string(from: self.calendar.selectedDate!)
+                let date = self.calendar.selectedDate!
+                let dateString = self.formatter.string(from: date)
                 let text = vc.todoTextField.text
                 
-                if self.dataManager.eventsDic[dateString] != nil {
-                    self.dataManager.eventsDic[dateString]?.append(text!)
-                } else {
-                    self.dataManager.eventsDic.updateValue([], forKey: dateString)
-                    self.dataManager.eventsDic[dateString]?.append(text!)
-                }
+                // create Memo
+                let memo = Memo(context: self.context)
+                memo.content = text
+                memo.date = dateString
                 
-                self.models = self.dataManager.eventsDic[dateString] ?? []
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.calendar.reloadData()
-                }
+                self.saveMemo()
+                self.fetchDateMemos(date: date)
             }
             self.present(vc, animated: true, completion: nil)
         }
-        
         view.addSubview(actionButton)
         actionButton.display(inViewController: self)
-        
-    }
-    
-    
-    
-    // MARK: - TableView DataSourse & Delegate
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        cell.textLabel?.text = models[indexPath.row]
-        cell.detailTextLabel?.text = "생성일 : \(dataManager.formatter.string(from: Date()))"
-        
-        return cell
     }
     
     // MARK: - Calendar DataSource & Delegate
@@ -171,29 +149,36 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        let dateString = formatter.string(from: date)
+        let request = Memo.fetchRequest() as NSFetchRequest<Memo>
+        let predict = NSPredicate(format: "date CONTAINS '\(dateString)'")
+        request.predicate = predict
         
-        let dateString = dataManager.formatter.string(from: date)
-        models = dataManager.eventsDic[dateString] ?? []
-        self.tableView.reloadData()
-        
+        do {
+            self.memos = try self.context.fetch(request)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        catch {
+            print("calendar didselect fetch error")
+        }
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        let dateString = formatter.string(from: date)
+        let request = Memo.fetchRequest() as NSFetchRequest<Memo>
+        let predict = NSPredicate(format: "date CONTAINS '\(dateString)'")
+        request.predicate = predict
         
-        let dateString = dataManager.formatter.string(from: date)
-        
-        for dic in dataManager.eventsDic {
-            let eventdate = dic.key
-            let newDate = eventdate
-            if newDate.contains(dateString) {
-                return dataManager.eventsDic[eventdate]!.count
-            }
+        do {
+            let memos = try self.context.fetch(request)
+            return memos.count
+        }
+        catch {
+            print("calendar numberIfEvents fetch error")
         }
         return 0
     }
-    
-    
-    
-    
 }
 

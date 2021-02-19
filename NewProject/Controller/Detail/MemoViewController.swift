@@ -11,6 +11,11 @@ import IQKeyboardManagerSwift
 class MemoViewController: UIViewController, UITextViewDelegate {
     
     var completionBlock: (()->Void)?
+    let formatter: DateFormatter = {
+       let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        return formatter
+    }()
     
     @IBOutlet weak var titleLabel: UINavigationItem!
     @IBOutlet weak var textView: UITextView!
@@ -22,7 +27,7 @@ class MemoViewController: UIViewController, UITextViewDelegate {
         IQKeyboardManager.shared.enable = false
         textView.becomeFirstResponder()
         placeholderSetting()
-        titleLabel.title = DataManager.shared.formatter.string(from: Date())
+        titleLabel.title = formatter.string(from: Date())
        
     }
     

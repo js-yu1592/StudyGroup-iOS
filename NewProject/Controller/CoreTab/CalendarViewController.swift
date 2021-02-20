@@ -14,7 +14,11 @@ import CoreData
 class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - Property
-    var memos = [Memo]()
+    var sections : [Section] = [
+        Section(title: "note"),
+        Section(title: "todo")
+    ]
+   
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -45,18 +49,20 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         
         floatingActionButton()
         initializeForCalendar()
-        fetchDateMemos(date: Date())
+        fetchDateMemos(date: Date(),isNote: true)
+        fetchDateMemos(date: Date(),isNote: false)
         
     }
     
     // MARK: - Function
     
-    func initializeForCalendar(){
-        self.calendar.select(Date())
-        self.calendar.delegate = self
-        self.calendar.dataSource = self
-        self.calendar.scope = .week
-        self.calendar.backgroundColor = .white
+    func initializeForCalendar() {
+        //utility
+        calendar.select(Date())
+        calendar.delegate = self
+        calendar.dataSource = self
+        calendar.scope = .week
+        calendar.backgroundColor = .white
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         
         // header
@@ -77,7 +83,6 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
         calendar.appearance.todaySelectionColor = .darkGray
         calendar.appearance.selectionColor = .darkGray
         calendar.appearance.eventDefaultColor = .lightGray
-        
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -111,9 +116,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
                 let memo = Memo(context: self.context)
                 memo.content = text
                 memo.date = dateString
+                memo.isNote = true
                 
                 self.saveMemo()
-                self.fetchDateMemos(date: date)
+                self.fetchDateMemos(date: date, isNote: true)
             }
             self.present(vc, animated: true, completion: nil)
         }
@@ -131,9 +137,10 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
                 let memo = Memo(context: self.context)
                 memo.content = text
                 memo.date = dateString
+                memo.isNote = false
                 
                 self.saveMemo()
-                self.fetchDateMemos(date: date)
+                self.fetchDateMemos(date: date, isNote: false)
             }
             self.present(vc, animated: true, completion: nil)
         }
@@ -150,35 +157,51 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let dateString = formatter.string(from: date)
-        let request = Memo.fetchRequest() as NSFetchRequest<Memo>
-        let predict = NSPredicate(format: "date CONTAINS '\(dateString)'")
-        request.predicate = predict
+        let request = Memo.fetchRequest() as NSFetchRequest
+        let datePredicate = NSPredicate(format: "date CONTAINS '\(dateString)'")
+        let notePredicate = NSPredicate(format: "isNote == '1'")
+        let myPredicateCompound1 = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, notePredicate])
+        request.predicate = myPredicateCompound1
+        sections[0].cells = try! context.fetch(request)
         
-        do {
-            self.memos = try self.context.fetch(request)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        catch {
-            print("calendar didselect fetch error")
+        let request2 = Memo.fetchRequest() as NSFetchRequest
+        let datePredicate2 = NSPredicate(format: "date CONTAINS '\(dateString)'")
+        let notePredicate2 = NSPredicate(format: "isNote == '0'")
+        let myPredicateCompound2 = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate2, notePredicate2])
+        request2.predicate = myPredicateCompound2
+        sections[1].cells = try! context.fetch(request2)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let dateString = formatter.string(from: date)
-        let request = Memo.fetchRequest() as NSFetchRequest<Memo>
-        let predict = NSPredicate(format: "date CONTAINS '\(dateString)'")
-        request.predicate = predict
+        let request = Memo.fetchRequest() as NSFetchRequest
+        let datePredicate = NSPredicate(format: "date CONTAINS '\(dateString)'")
+        let notePredicate = NSPredicate(format: "isNote == '1'")
+        let myPredicateCompound1 = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, notePredicate])
+        request.predicate = myPredicateCompound1
+        let section1 = try! context.fetch(request)
+
         
-        do {
-            let memos = try self.context.fetch(request)
-            return memos.count
+        let request2 = Memo.fetchRequest() as NSFetchRequest
+        let datePredicate2 = NSPredicate(format: "date CONTAINS '\(dateString)'")
+        let notePredicate2 = NSPredicate(format: "isNote == '0'")
+        let myPredicateCompound2 = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate2, notePredicate2])
+        request2.predicate = myPredicateCompound2
+        let section2 = try! context.fetch(request2)
+        
+        if !section1.isEmpty {
+            if !section2.isEmpty {
+                return 2
+            } else {
+                return 1
+            }
+        } else {
+            return 0
         }
-        catch {
-            print("calendar numberIfEvents fetch error")
-        }
-        return 0
     }
 }
 

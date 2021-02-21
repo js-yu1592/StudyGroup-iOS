@@ -16,7 +16,7 @@ extension MainViewController: UITableViewDelegate {
         
         self.present(DetailVC, animated: true, completion: nil)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
         
@@ -29,24 +29,17 @@ extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let list = todoItemDic[clickedDate] else {
-            return 0
+            return [1,0][section]
         }
-        if section == 0 {
-            if noteContentStatus() == true {
-                return 1
-            } else {
-                return 0
-            }
-        }  else {
-            return [1,list.count][section]
-        }
-
-
+        
+        return [1,list.count][section]
+        
+        
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell")!
@@ -56,9 +49,9 @@ extension MainViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell")!
             cell.textLabel?.text = todoItemDic[clickedDate]![indexPath.row]
             return cell
-            }
         }
+    }
     
-   
+    
 }
 

@@ -107,31 +107,7 @@ class MainViewController: UIViewController {
                         
                         
                     } else {
-                        print("todoItem 값이 없음")
-                        self.tableView.reloadData()
-                    }
-                }
-            } else {
-                // noteContent 데이터 읽기
-                self.db.collection("events").document(date).getDocument { (document, error) in
-                    if error == nil && document != nil && document!.exists {
-                        let documentData = document!.data()
-                        self.noteContent[date] = documentData?["noteContent"] as? String
-                        if let content = self.noteContent[date] {
-                            print("noteContent : \(content)")
-                        } else {
-                            self.noteContent[date] = ""
-                            print("noteContent : \(self.noteContent[date]!)")
-                        }
-                        
-                        
-                        self.tableView.reloadData()
-                        self.calendar.reloadData()
-                        
-                    } else {
-                        print("noteContent 값이 없음")
-                        self.noteContent[date] = ""
-                        self.tableView.reloadData()
+                        print("fail")
                     }
                 }
             }
@@ -175,7 +151,7 @@ class MainViewController: UIViewController {
                         self.tableView.reloadData()
                         self.calendar.reloadData()
                     }
-                    print("todoItemDicAppend : \(self.todoItemDic[self.clickedDate]!)")
+                    
                                             
                 }
             })
@@ -242,7 +218,6 @@ extension MainViewController: CompleteDelegate {
             self.calendar.reloadData()
         }
         
-        self.tableView.cellForRow(at: IndexPath(row: 0, section: 0))!.textLabel?.text = noteContent[self.clickedDate]
         
         
     }

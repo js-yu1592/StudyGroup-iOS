@@ -44,6 +44,7 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.titleLabel?.text = sections[indexPath.section].cells[indexPath.row].content
             cell.subtitleLabel?.text = sections[indexPath.section].cells[indexPath.row].date
+            
         }
         
         return cell
@@ -89,6 +90,18 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UISwipeActionsConfiguration(actions: [deleteAction, updateAction])
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "popup") as? PopUpViewController else { return }
+        
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        
+        present(vc, animated: true, completion: nil)
+        
+        
+    }
 }
 
 struct Section {
@@ -104,6 +117,7 @@ class CustomTalbeViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
         titleLabel.font = .systemFont(ofSize: 17, weight: .regular)
         subtitleLabel.font = .systemFont(ofSize: 14, weight: .thin)
     }

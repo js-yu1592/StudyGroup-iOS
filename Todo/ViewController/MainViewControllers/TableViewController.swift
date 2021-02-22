@@ -9,35 +9,57 @@ import UIKit
 
 // MARK:- UITableViewDelegate
 extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if noteContentStatus() == false {
+            return nil
+        }
+        let sectionHeader = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 2))
+        
+        sectionHeader.backgroundColor = .darkGray
+        return sectionHeader
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAt : \(indexPath.row)")
+        
         let DetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         
         self.present(DetailVC, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 50
+        }
         return 60
         
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
+    
+    
 }
 
 // MARK:- UITableViewDataSource
-// tableview 수정해야함
 extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let list = todoItemDic[clickedDate] else {
+        if noteContentStatus() == true && todoItemDic[clickedDate] != nil {
+            return [1,todoItemDic[clickedDate]!.count][section]
+        } else if noteContentStatus() == false && todoItemDic[clickedDate] != nil {
+            return [0,todoItemDic[clickedDate]!.count][section]
+        } else if noteContentStatus() == true && todoItemDic[clickedDate] == nil {
             return [1,0][section]
+        } else {
+            return [0,0][section]
         }
-        
-        return [1,list.count][section]
-        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

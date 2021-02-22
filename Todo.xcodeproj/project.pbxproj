@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12CAA38A1AAA20BC43769D2D /* Pods_Todo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9E0632CEBBE16BF3398CFD /* Pods_Todo.framework */; };
+		2415561025E3E821003F4E80 /* MyNextTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2415560F25E3E821003F4E80 /* MyNextTodo.swift */; };
 		242A2E4625D903E800A03D0F /* CompleteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242A2E4525D903E800A03D0F /* CompleteDelegate.swift */; };
 		2454B4E125D2D8DB00BE9794 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2454B4E025D2D8DB00BE9794 /* AppDelegate.swift */; };
 		2454B4E325D2D8DB00BE9794 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2454B4E225D2D8DB00BE9794 /* SceneDelegate.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		1B9E0632CEBBE16BF3398CFD /* Pods_Todo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2415560F25E3E821003F4E80 /* MyNextTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNextTodo.swift; sourceTree = "<group>"; };
 		242A2E4525D903E800A03D0F /* CompleteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDelegate.swift; sourceTree = "<group>"; };
 		2454B4DD25D2D8DB00BE9794 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2454B4E025D2D8DB00BE9794 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 		2454B4DF25D2D8DB00BE9794 /* Todo */ = {
 			isa = PBXGroup;
 			children = (
+				2415560F25E3E821003F4E80 /* MyNextTodo.swift */,
 				24CCC91425D6C10200CDC994 /* View */,
 				24CCC91225D6C0E200CDC994 /* ViewController */,
 				24CCC90F25D6C0BC00CDC994 /* AppDelegate */,
@@ -257,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2454B4E525D2D8DB00BE9794 /* MainViewController.swift in Sources */,
+				2415561025E3E821003F4E80 /* MyNextTodo.swift in Sources */,
 				2454B4E125D2D8DB00BE9794 /* AppDelegate.swift in Sources */,
 				2454B4E325D2D8DB00BE9794 /* SceneDelegate.swift in Sources */,
 				248156C025E20C6A0029249A /* TableViewController.swift in Sources */,

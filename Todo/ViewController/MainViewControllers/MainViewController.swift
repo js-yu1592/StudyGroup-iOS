@@ -122,6 +122,7 @@ class MainViewController: UIViewController {
         calendar.appearance.selectionColor = .darkGray
         calendar.appearance.headerTitleColor = .black
         calendar.appearance.weekdayTextColor = .black
+        calendar.appearance.titleTodayColor = .red
         
     }
     
@@ -169,7 +170,7 @@ class MainViewController: UIViewController {
     /// noteContent Dictionary value값이 nil이 아니면 true 리턴, nil이면 false 리턴
     func noteContentStatus() -> Bool {
         print("MainViewController - noteContentStatus()")
-        if noteContent[clickedDate] != "" {
+        if noteContent[clickedDate] != nil {
             return true
         } else {
             return false

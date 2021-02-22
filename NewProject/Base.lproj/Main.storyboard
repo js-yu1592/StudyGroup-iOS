@@ -264,7 +264,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="K9D-yy-mZf">
-                                <rect key="frame" x="0.0" y="355" width="414" height="282"/>
+                                <rect key="frame" x="0.0" y="355" width="414" height="332"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" systemColor="opaqueSeparatorColor"/>
                                 <prototypes>
@@ -275,16 +275,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tKz-8K-vWy">
-                                                    <rect key="frame" x="10" y="12.666666666666664" width="25" height="25"/>
-                                                    <color key="tintColor" systemColor="secondaryLabelColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="2an-s0-48q"/>
-                                                        <constraint firstAttribute="width" constant="25" id="p0F-an-IUx"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dae-22-GJX">
-                                                    <rect key="frame" x="45" y="14.999999999999998" width="28.666666666666671" height="20.333333333333329"/>
+                                                    <rect key="frame" x="40" y="14.999999999999998" width="28.666666666666671" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -294,24 +286,22 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="mWC-9V-Fld"/>
                                                     </constraints>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
                                                         <action selector="cellButtonTapped:" destination="AAP-G4-ADV" eventType="touchUpInside" id="I4M-Xv-sZv"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="tKz-8K-vWy" firstAttribute="leading" secondItem="efq-th-69h" secondAttribute="leading" constant="10" id="1oh-nz-YzS"/>
                                                 <constraint firstItem="XuT-QJ-K8W" firstAttribute="top" secondItem="efq-th-69h" secondAttribute="top" id="7rw-73-Vyb"/>
                                                 <constraint firstItem="XuT-QJ-K8W" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dae-22-GJX" secondAttribute="trailing" constant="10" id="CcD-D1-Uoz"/>
                                                 <constraint firstAttribute="bottom" secondItem="XuT-QJ-K8W" secondAttribute="bottom" id="Moq-kT-7ss"/>
-                                                <constraint firstItem="tKz-8K-vWy" firstAttribute="centerY" secondItem="efq-th-69h" secondAttribute="centerY" id="dPP-TF-iS0"/>
-                                                <constraint firstItem="dae-22-GJX" firstAttribute="leading" secondItem="tKz-8K-vWy" secondAttribute="trailing" constant="10" id="i45-AM-Wun"/>
+                                                <constraint firstItem="dae-22-GJX" firstAttribute="leading" secondItem="efq-th-69h" secondAttribute="leadingMargin" constant="20" id="cfK-ke-DKA"/>
                                                 <constraint firstItem="dae-22-GJX" firstAttribute="centerY" secondItem="efq-th-69h" secondAttribute="centerY" id="t1d-Ny-tHu"/>
                                                 <constraint firstAttribute="trailing" secondItem="XuT-QJ-K8W" secondAttribute="trailing" constant="30" id="xDI-E2-YIO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="myImage" destination="tKz-8K-vWy" id="d40-hv-jOa"/>
                                             <outlet property="statusButtonOutlet" destination="XuT-QJ-K8W" id="Hie-UR-dGW"/>
                                             <outlet property="titleLabel" destination="dae-22-GJX" id="UOm-27-5jO"/>
                                         </connections>
@@ -331,7 +321,7 @@
                             <constraint firstItem="K9D-yy-mZf" firstAttribute="leading" secondItem="O1Z-Jp-iZ2" secondAttribute="leading" id="Dk6-H5-Dq6"/>
                             <constraint firstItem="qHS-ey-xBC" firstAttribute="leading" secondItem="O1Z-Jp-iZ2" secondAttribute="leading" id="KNO-zU-2iv"/>
                             <constraint firstItem="qHS-ey-xBC" firstAttribute="top" secondItem="O1Z-Jp-iZ2" secondAttribute="top" id="QmG-nm-efD"/>
-                            <constraint firstItem="O1Z-Jp-iZ2" firstAttribute="bottom" secondItem="K9D-yy-mZf" secondAttribute="bottom" constant="50" id="kvn-y6-fqx"/>
+                            <constraint firstItem="O1Z-Jp-iZ2" firstAttribute="bottom" secondItem="K9D-yy-mZf" secondAttribute="bottom" id="kvn-y6-fqx"/>
                             <constraint firstItem="K9D-yy-mZf" firstAttribute="top" secondItem="qHS-ey-xBC" secondAttribute="bottom" constant="5" id="leo-lZ-6Wr"/>
                         </constraints>
                     </view>
@@ -440,9 +430,6 @@
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

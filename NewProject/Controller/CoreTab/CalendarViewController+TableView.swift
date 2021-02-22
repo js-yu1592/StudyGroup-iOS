@@ -50,14 +50,16 @@ extension CalendarViewController: UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.section == 0 {
             cell.titleLabel?.text = sections[indexPath.section].cells.last?.content
-            cell.myImage.image = UIImage(systemName: "doc.circle.fill")
             cell.backgroundColor = #colorLiteral(red: 0.9642801167, green: 0.9693287037, blue: 0.9693287037, alpha: 1)
-            cell.statusButtonOutlet.isHidden = true
+            cell.statusButtonOutlet.setImage(UIImage(systemName: "doc.circle.fill"), for: .normal)
+            cell.statusButtonOutlet.tintColor = .darkGray
+            cell.statusButtonOutlet.backgroundColor = .clear
         } else {
             let target = sections[indexPath.section].cells[indexPath.row]
             cell.titleLabel?.text = target.content
             cell.statusButtonOutlet.setImage(UIImage(systemName: target.STATUSMEMO.statusString), for: .normal)
             cell.statusButtonOutlet.tintColor = target.STATUSMEMO.statusColor
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
             cell.cellCompletionClosure = {
                 
                 let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -169,15 +171,15 @@ enum StatusMemo : Int64 {
     var statusColor: UIColor {
         switch self {
         case .incompletion:
-            return #colorLiteral(red: 1, green: 0.1940703694, blue: 0.5553449414, alpha: 1)
+            return #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
         case .postpone:
-            return #colorLiteral(red: 0.7814005641, green: 0.2418698761, blue: 1, alpha: 1)
+            return #colorLiteral(red: 0.8945541421, green: 0.6824823285, blue: 1, alpha: 1)
         case .ongoing:
-            return #colorLiteral(red: 0.9967781901, green: 0.8560935855, blue: 0.4604123235, alpha: 1)
+            return #colorLiteral(red: 0.9764705896, green: 0.8496754634, blue: 0.7620139686, alpha: 1)
         case .completion:
-            return #colorLiteral(red: 0.3685016646, green: 0.4238947171, blue: 1, alpha: 1)
+            return #colorLiteral(red: 0.7429843822, green: 0.8851136387, blue: 0.9764705896, alpha: 1)
         case .dafaultStatus:
-            return #colorLiteral(red: 1, green: 0.5052765569, blue: 0.1241788327, alpha: 1)
+            return #colorLiteral(red: 0.7671154351, green: 0.8862745166, blue: 0.8110161144, alpha: 1)
         }
     }
     

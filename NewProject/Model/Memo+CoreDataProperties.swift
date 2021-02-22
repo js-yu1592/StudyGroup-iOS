@@ -2,7 +2,7 @@
 //  Memo+CoreDataProperties.swift
 //  
 //
-//  Created by 박형석 on 2021/02/20.
+//  Created by 박형석 on 2021/02/22.
 //
 //
 
@@ -19,5 +19,6 @@ extension Memo {
     @NSManaged public var content: String?
     @NSManaged public var date: String?
     @NSManaged public var isNote: Bool
+    @NSManaged public var status: Int64
 
 }

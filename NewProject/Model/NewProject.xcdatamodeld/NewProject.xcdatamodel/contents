@@ -4,8 +4,9 @@
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="date" attributeType="String"/>
         <attribute name="isNote" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Memo" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Memo" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>

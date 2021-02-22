@@ -12,8 +12,9 @@ import JJFloatingActionButton
 import CoreData
 
 class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UIGestureRecognizerDelegate {
-    
+   
     // MARK: - Property
+    
     var sections : [Section] = [
         Section(title: "note"),
         Section(title: "todo")
@@ -105,6 +106,8 @@ class CalendarViewController: UIViewController, FSCalendarDataSource, FSCalendar
             } else {
                 return 1
             }
+        } else if !section2.isEmpty {
+            return 1
         } else {
             return 0
         }

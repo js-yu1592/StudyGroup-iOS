@@ -30,19 +30,7 @@ extension MainViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
 
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let stringDate = dateFormatter.string(from: date)
-//        let keyTodoItemDic = Set(todoItemDic.keys)
-//        let keyNoteContent = Set(noteContent.keys)
-//        
-//        let intersectionKey = keyTodoItemDic.intersection(keyNoteContent)
-//        let exclusiveOrKey = (keyTodoItemDic.subtracting(keyNoteContent)).union(keyNoteContent.subtracting(keyTodoItemDic))
-//        
-//        if intersectionKey.contains(dateFormatter.string(from: date)) {
-//            return 2
-//        } else if exclusiveOrKey.contains(dateFormatter.string(from: date)){
-//            return 1
-//        } else {
-//            return 0
-//        }
+
         if todoItemDic.keys.contains(stringDate) && noteContent.keys.contains(stringDate) {
             return 2
         } else if todoItemDic.keys.contains(stringDate) {

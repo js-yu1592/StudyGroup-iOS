@@ -194,6 +194,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="noteCompleteBtn" destination="EZY-xW-2sl" id="8On-1e-Dkh"/>
                         <outlet property="noteTextView" destination="qFt-6P-qk2" id="vy5-oa-atF"/>
                     </connections>
                 </viewController>
@@ -242,7 +243,7 @@
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="15" leading="8" bottom="15" trailing="8"/>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F4b-qh-3ft">
-                                <rect key="frame" x="20" y="220" width="374" height="100"/>
+                                <rect key="frame" x="20" y="204.5" width="374" height="100"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QvE-ld-dl5">
                                         <rect key="frame" x="0.0" y="24.5" width="160.5" height="51"/>
@@ -280,7 +281,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="191" translatesAutoresizingMaskIntoConstraints="NO" id="1SP-ff-ajq">
-                                <rect key="frame" x="20" y="350" width="374" height="31"/>
+                                <rect key="frame" x="20" y="334.5" width="374" height="31"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovj-O8-0DJ">
                                         <rect key="frame" x="0.0" y="0.0" width="134" height="31"/>
@@ -303,8 +304,8 @@
                                 <color key="tintColor" red="0.99684339759999996" green="0.19502528669999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button" image="trash" catalog="system"/>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RZ6-yt-LsS">
-                                <rect key="frame" x="20" y="156" width="374" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RZ6-yt-LsS">
+                                <rect key="frame" x="20" y="156" width="374" height="18.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -328,6 +329,10 @@
                             <constraint firstItem="1SP-ff-ajq" firstAttribute="top" secondItem="F4b-qh-3ft" secondAttribute="bottom" constant="30" id="yef-uJ-UTE"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contentTF" destination="RZ6-yt-LsS" id="Ul2-nj-8eb"/>
+                        <outlet property="detailCompleteBtn" destination="GBv-0w-4S0" id="ewB-VA-dlE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ihp-jq-qRn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

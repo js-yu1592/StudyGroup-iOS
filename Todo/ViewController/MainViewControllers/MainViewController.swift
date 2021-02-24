@@ -57,6 +57,8 @@ class MainViewController: UIViewController {
     
     var dicKeyArr: Array<String> = []
     
+    var cellClickedIndex: Int = 0
+        
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -209,10 +211,21 @@ extension MainViewController: UIGestureRecognizerDelegate {
 // MARK: - CompleteDelegate
 /// NoteViewController에서 값을 가져오기 위한 Delegate
 extension MainViewController: CompleteDelegate {
-    func onCompleteButtonClicked(noteData: String) {
-        print("CompleteDelegate - onCompleteButtonClicked() called / noteData : \(noteData)")
-        self.db.collection("events").document(self.clickedDate).setData(["noteContent":noteData],merge: true)
-        noteContent[self.clickedDate] = noteData
+    func onCompleteButtonClicked(noteData: String, sender: UIButton) {
+        print("CompleteDelegate - onCompleteButtonClicked() called / noteData : \(noteData), sender : \(sender.tag)")
+        
+        // noteVC complete btn tag is 1, DetailVC complete btn tag is 2
+        switch sender.tag {
+        case 1:
+            self.db.collection("events").document(self.clickedDate).setData(["noteContent":noteData],merge: true)
+            noteContent[self.clickedDate] = noteData
+        case 2:
+            todoItemDic[clickedDate]![cellClickedIndex] = noteData
+            self.db.collection("events").document(self.clickedDate).updateData(["todoItem":todoItemDic[clickedDate]!])
+        default:
+            print("sender.tag is not exist")
+        }
+
         
         DispatchQueue.main.async {
             self.tableView.reloadData()

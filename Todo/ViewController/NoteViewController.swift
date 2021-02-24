@@ -14,6 +14,10 @@ class NoteViewController: UIViewController {
     
     var completeDelegate: CompleteDelegate?
 
+    @IBOutlet weak var noteCompleteBtn: UIButton!
+    
+    var stringHolder: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("NoteViewController - viewDidLoad() called")
@@ -23,7 +27,13 @@ class NoteViewController: UIViewController {
         noteTextView.delegate = self
         noteTextView.text = "Add notes"
         noteTextView.textColor = UIColor.lightGray
+        noteCompleteBtn.tag = 1
         
+        if stringHolder != "" {
+            noteTextView.textColor = UIColor.black
+            noteTextView.text = stringHolder
+            stringHolder = ""
+        }
     }
     
     @IBAction func onCloseBtnClicked(_ sender: UIButton) {
@@ -36,7 +46,7 @@ class NoteViewController: UIViewController {
         } else {
             print(noteTextView.text!)
             self.dismiss(animated: true, completion: nil)
-            completeDelegate?.onCompleteButtonClicked(noteData: noteTextView.text)
+            completeDelegate?.onCompleteButtonClicked(noteData: noteTextView.text, sender: noteCompleteBtn)
             
         }
         
@@ -48,7 +58,7 @@ class NoteViewController: UIViewController {
 // MARK: - UITextViewDelegate
 extension NoteViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
+        if textView.textColor == UIColor.lightGray && stringHolder == "" {
             textView.text = nil
             textView.textColor = UIColor.black
         }

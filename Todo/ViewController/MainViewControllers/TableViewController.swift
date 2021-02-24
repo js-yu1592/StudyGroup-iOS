@@ -14,6 +14,7 @@ extension MainViewController: UITableViewDelegate {
             return nil
         }
         let sectionHeader = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 2))
+        sectionHeader.layer.cornerRadius = 8
         
         sectionHeader.backgroundColor = .darkGray
         return sectionHeader
@@ -22,9 +23,19 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAt : \(indexPath.row)")
         
-        let DetailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        cellClickedIndex = indexPath.row
+        if indexPath.section == 0 {
+            let noteVC = self.storyboard?.instantiateViewController(withIdentifier: "NoteViewController") as! NoteViewController
+            noteVC.stringHolder = (tableView.cellForRow(at: indexPath)?.textLabel?.text)!
+            noteVC.completeDelegate = self
+            self.present(noteVC, animated: true, completion: nil)
+        } else {
+            let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+            detailVC.stringHolder = (tableView.cellForRow(at: indexPath)?.textLabel?.text)!
+            detailVC.completeDelegate = self
+            self.present(detailVC, animated: true, completion: nil)
+        }
         
-        self.present(DetailVC, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -66,10 +77,12 @@ extension MainViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell")!
             cell.textLabel?.text = noteContent[clickedDate]
+            cell.layer.cornerRadius = 8
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell")!
             cell.textLabel?.text = todoItemDic[clickedDate]![indexPath.row]
+            cell.layer.cornerRadius = 8
             return cell
         }
     }

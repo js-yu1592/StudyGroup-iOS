@@ -27,24 +27,19 @@ extension MainViewController: UITableViewDelegate {
         if indexPath.section == 0 {
             let noteVC = self.storyboard?.instantiateViewController(withIdentifier: "NoteViewController") as! NoteViewController
             noteVC.stringHolder = (tableView.cellForRow(at: indexPath)?.textLabel?.text)!
+            noteVC.noteDateString = clickedDateLabelString
             noteVC.completeDelegate = self
             self.present(noteVC, animated: true, completion: nil)
         } else {
             let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
             detailVC.stringHolder = (tableView.cellForRow(at: indexPath)?.textLabel?.text)!
+            detailVC.detailDateString = clickedDateLabelString
             detailVC.completeDelegate = self
             self.present(detailVC, animated: true, completion: nil)
         }
         
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 50
-        }
-        return 60
-        
-    }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 2
     }
@@ -77,6 +72,7 @@ extension MainViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell")!
             cell.textLabel?.text = noteContent[clickedDate]
+            cell.textLabel?.numberOfLines = 0
             cell.layer.cornerRadius = 8
             return cell
         } else {

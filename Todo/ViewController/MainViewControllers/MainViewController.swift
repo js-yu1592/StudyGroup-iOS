@@ -43,6 +43,14 @@ class MainViewController: UIViewController {
         return date
     }()
     
+    var clickedDateLabelString: String = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE, MMMM dd, yyyy"
+        var date = String()
+        date = formatter.string(from: Date())
+        return date
+    }()
+    
     let actionButton: JJFloatingActionButton = {
         let button = JJFloatingActionButton()
         button.buttonColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
@@ -68,7 +76,6 @@ class MainViewController: UIViewController {
         fetchData(date: dateFormatter.string(from: Date()),flag: true)
         fetchData(date: dateFormatter.string(from: Date()),flag: false)
         
-        
         calendarAppearance()
         self.tableView.addSubview(actionButton)
         self.calendar.select(Date())
@@ -84,6 +91,9 @@ class MainViewController: UIViewController {
         actionButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         actionButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 100
+
     }
     
     // MARK:- function
@@ -128,7 +138,7 @@ class MainViewController: UIViewController {
         
     }
     
-    // MARK: - ActionButton : add todoItem complete, have to fix note
+    // MARK: - ActionButton
     /// 액션버튼 클릭시 2가지 아이템이 나오고 각 아이템별로 데이터를 파이어스토어에 저장하는 메서드
     func onActionBtnClicked() {
         print("MainViewController - onActionBtnClicked()")
@@ -171,7 +181,6 @@ class MainViewController: UIViewController {
     
     /// noteContent Dictionary value값이 nil이 아니면 true 리턴, nil이면 false 리턴
     func noteContentStatus() -> Bool {
-        print("MainViewController - noteContentStatus()")
         if noteContent[clickedDate] != nil {
             return true
         } else {
@@ -199,8 +208,10 @@ extension MainViewController: UIGestureRecognizerDelegate {
             let velocity = self.scopeGesture.velocity(in: self.view)
             switch self.calendar.scope {
             case .month:
+                self.actionButton.isHidden = false
                 return velocity.y < 0
             case .week:
+                self.actionButton.isHidden = true
                 return velocity.y > 0
             }
         }

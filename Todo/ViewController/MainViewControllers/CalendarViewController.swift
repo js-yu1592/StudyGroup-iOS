@@ -18,7 +18,8 @@ extension MainViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
     /// clickedDate을 키값으로 정해 tableView를 reload
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         clickedDate = dateFormatter.string(from: date)
-
+        clickedDateLabelString = dateFormatter.string(from: date)
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -44,7 +45,6 @@ extension MainViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance,eventDefaultColorsFor date: Date) -> [UIColor]?
     {
-        print("eventDefaultColorsFor called")
         let stringDate = dateFormatter.string(from: date)
 
         if todoItemDic.keys.contains(stringDate) && noteContent.keys.contains(stringDate) {

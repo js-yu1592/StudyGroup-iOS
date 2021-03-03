@@ -41,10 +41,6 @@ class StateViewController: UIViewController {
         guard let pvc = self.presentingViewController else { return }
         self.dismiss(animated: true) {
             
-            if let completionHandler = self.completionHandler {
-                completionHandler(StateMemo.postpone.rawValue)
-            }
-            
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "calendarVC") as? CalendarViewController else { return }
             vc.modalPresentationStyle = .overCurrentContext
             vc.modalTransitionStyle = .crossDissolve

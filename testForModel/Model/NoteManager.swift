@@ -14,6 +14,13 @@ class NoteManager {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var notes = [Note]()
+    var lastNote : Note? {
+        if !notes.isEmpty {
+            return notes.last!
+        } else {
+            return nil
+        }
+    }
     
     private func saveNote() {
         do {

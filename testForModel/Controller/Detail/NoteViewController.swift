@@ -9,23 +9,15 @@ import UIKit
 
 class NoteViewController: UIViewController, UITextViewDelegate {
     
-    let formatter: DateFormatter = {
-       let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월 dd일"
-        return formatter
-    }()
-    
     var note: Note?
     var completionBlock: (()->Void)?
     
-    @IBOutlet weak var titleLabel: UINavigationItem!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var completionButtonOutlet: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         placeholderSetting()
-        titleLabel.title = formatter.string(from: Date())
     }
     
     func placeholderSetting() {

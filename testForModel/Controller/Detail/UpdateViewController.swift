@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import UserNotifications
 
 class UpdateViewController: UIViewController {
 
     var memo: Memo?
-    var completionHandler: (()->Void)?
+    var completionHandler: ((Date?)->Void)?
     var myDate: Date?
     var myState: Int64?
     
@@ -32,21 +33,44 @@ class UpdateViewController: UIViewController {
         super.viewDidLoad()
         
         updateTextField.text = memo?.content
-        updateDateButton.setTitle(formatter.string(for: memo?.date), for: .normal
-        )
+        updateDateButton.setTitle(formatter.string(for: memo?.date), for: .normal)
         updateStateButton.setImage(UIImage(systemName: (memo?.STATEMEMO.stateString)!), for: .normal)
         updateStateButton.tintColor = memo?.STATEMEMO.stateColor
         
-        updateAlarmSwitch.isOn = false
-        updateAlarmDatePicker.isEnabled = false
+        checkDataForSwitch()
+        checkSwitchForDatePicker()
     }
     
+    private func checkDataForSwitch(){
+        // 메모의 알람 데이터 여부에 따른 알림스위치 온오프여부
+        if memo?.alarmDate == nil {
+            updateAlarmSwitch.isOn = false
+        } else {
+            updateAlarmSwitch.isOn = true
+        }
+    }
+    
+    private func checkSwitchForDatePicker(){
+        // 알림스위치 온오프 여부에 따른 데이터픽커 사용가능여부
+        if updateAlarmSwitch.isOn {
+            updateAlarmDatePicker.isEnabled = true
+            guard let memoAlarmDate = memo?.alarmDate else { return }
+            updateAlarmDatePicker.date = memoAlarmDate
+        } else {
+            updateAlarmDatePicker.isEnabled = false
+        }
+    }
+    
+    
     @IBAction func updateAlarmSwitchTapped(_ sender: UISwitch) {
-        
         if updateAlarmSwitch.isOn {
             updateAlarmDatePicker.isEnabled = true
         } else {
+            let oldMemoAlarmDate = self.memo?.alarmDate
+            let oldDateString = "id_\(String(describing: oldMemoAlarmDate))"
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oldDateString])
             updateAlarmDatePicker.isEnabled = false
+            memo?.alarmDate = nil
         }
     }
     
@@ -55,55 +79,46 @@ class UpdateViewController: UIViewController {
     }
     
     @IBAction func updateDateButtonTapped(_ sender: UIButton) {
-        
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "calendarVC") as? CalendarViewController else { return }
-        
         vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
-        
         vc.completionHandler = { date in
             self.myDate = date
-            
             DispatchQueue.main.async {
                 self.updateDateButton.setTitle(self.formatter.string(from: date), for: .normal)
             }
         }
-        
         present(vc, animated: true, completion: nil)
     }
-    
     
     @IBAction func updateStateButtonTapped(_ sender: UIButton) {
         
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "stateVC") as? StateViewController else { return }
         vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
-        
         vc.completionHandler = { state in
             self.myState = state
-            
             DispatchQueue.main.async {
                 guard let statememo = StateMemo.init(rawValue: state) else { return }
                 self.updateStateButton.setImage(UIImage(systemName: (statememo.stateString)), for: .normal)
                 self.updateStateButton.tintColor = statememo.stateColor
             }
-           
         }
-        
         present(vc, animated: true, completion: nil)
-        
     }
     
-    
-    
     @IBAction func completionButton(_ sender: UIBarButtonItem) {
-        // 진행 상황 및 기한 팝업만들어서 state랑 newdate 추가해주기
-        // 알람 기능 추가하기
-        MemoManager.shared.updateMemo(memo: memo!, content: updateTextField.text, state: myState, alarmDate: updateAlarmDatePicker.date, newDate: myDate)
+        let oldMemoAlarmDate = self.memo?.alarmDate
         
+        if updateAlarmSwitch.isOn {
+            MemoManager.shared.updateMemo(memo: memo!, content: updateTextField.text, state: myState, alarmDate: updateAlarmDatePicker.date, newDate: myDate)
+        } else {
+            MemoManager.shared.updateMemo(memo: memo!, content: updateTextField.text, state: myState, newDate: myDate)
+        }
+       
         self.dismiss(animated: true) {
             if let completionHandler = self.completionHandler {
-                completionHandler()
+                completionHandler(oldMemoAlarmDate)
             }
         }
     }

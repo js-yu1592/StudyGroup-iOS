@@ -12,6 +12,11 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         self.calendarHeightConstraint.constant = bounds.height
+        if calendar.scope == .month {
+            actionButton.isHidden = true
+        } else {
+            actionButton.isHidden = false
+        }
         self.view.layoutIfNeeded()
     }
     
@@ -42,7 +47,19 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let newMemos = memoManager.readMemos(date: date)
-        return newMemos.count
+        let newNotes = noteManager.readNote(date: date)
+        
+        if !newNotes.isEmpty {
+            if !newMemos.isEmpty {
+                return 2
+            } else {
+                return 1
+            }
+        } else if !newMemos.isEmpty {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     func initializeForCalendar() {

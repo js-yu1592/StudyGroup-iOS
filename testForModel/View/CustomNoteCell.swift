@@ -20,7 +20,9 @@ class CustomNoteCell: UITableViewCell {
     
     func updateUI(note: Note){
         noteLabel.text = note.content
-        backgroundColor = #colorLiteral(red: 0.9484953704, green: 0.9484953704, blue: 0.9484953704, alpha: 1)
+        backgroundView = UIImageView(image: UIImage(named: "gra"))
+        backgroundView?.contentMode = .scaleAspectFill
+        backgroundView?.alpha = 0.5
     }
     
 }

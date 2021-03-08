@@ -13,7 +13,7 @@ class NoteViewController: UIViewController {
     @IBOutlet weak var noteTextView: UITextView!
     
     var completeDelegate: CompleteDelegate?
-
+    
     @IBOutlet weak var noteCompleteBtn: UIButton!
     
     var stringHolder: String = ""
@@ -39,7 +39,7 @@ class NoteViewController: UIViewController {
             noteTextView.text = stringHolder
             stringHolder = ""
         }
-       
+        
         
         let toolBarKeyboard = UIToolbar()
         toolBarKeyboard.sizeToFit()
@@ -53,7 +53,7 @@ class NoteViewController: UIViewController {
         view.addGestureRecognizer(tap)
         
         noteDateLabel.text = noteDateString
-
+        
     }
     
     @objc fileprivate func doneBtnClicked() {
@@ -64,16 +64,17 @@ class NoteViewController: UIViewController {
         view.endEditing(true)
     }
     
-
+    
     
     @IBAction func onCloseBtnClicked(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onCompleteBtnClicked(_ sender: UIButton) {
-            print(noteTextView.text!)
-            self.dismiss(animated: true, completion: nil)
-            completeDelegate?.onCompleteButtonClicked(noteData: noteTextView.text, sender: noteCompleteBtn)
+        print(noteTextView.text!)
+        self.dismiss(animated: true, completion: nil)
+        
+        completeDelegate?.onCompleteButtonClicked(noteData: noteTextView.text, date: noteDateString, sender: noteCompleteBtn)
     }
     
     
@@ -81,25 +82,25 @@ class NoteViewController: UIViewController {
 
 // MARK: - UITextViewDelegate
 extension NoteViewController: UITextViewDelegate {
-
+    
     func textViewDidBeginEditing(_ textView: UITextView)
     {
         if (textView.text == "Add notes" && textView.textColor == .lightGray)
         {
             textView.text = ""
             textView.textColor = .black
-          
+            
         }
         textView.becomeFirstResponder() //Optional
     }
-
+    
     func textViewDidEndEditing(_ textView: UITextView)
     {
         if (textView.text == "")
         {
             textView.text = "Add notes"
             textView.textColor = .lightGray
-           
+            
         }
         textView.resignFirstResponder()
     }
@@ -113,5 +114,5 @@ extension NoteViewController: UITextViewDelegate {
             noteCompleteBtn.alpha = 1.0
         }
     }
-
+    
 }
